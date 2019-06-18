@@ -7754,12 +7754,19 @@ Bool dis_ARM64_branch_etc(/*MB_OUT*/DisResult* dres, UInt insn,
       return True;
    }
 
+   /* ------------------ DC_CVAC ------------------ */
    /* ------------------ DC_CVAU ------------------ */
-   /* D5 0B 7B 001 Rt  dc cvau, rT
+   /* ------------------ DC_CVAP ------------------ */
+   /* ------------------ DC_CVADP ----------------- */
+   /* ------------------ DC_CIVAC ----------------- */
+   /* D5 0B 7A 001 Rt  dc cvac, rT
+      D5 0B 7B 001 Rt  dc cvau, rT
+      D5 0B 7C 001 Rt  dc cvap, rT
+      D5 0B 7D 001 Rt  dc cvadp, rT
       D5 0B 7E 001 Rt  dc civac, rT
+      78, 79 and 7F are unassigned -- speculate they'll also be dcache flushes.
    */
-   if (   (INSN(31,0) & 0xFFFFFFE0) == 0xD50B7B20
-       || (INSN(31,0) & 0xFFFFFFE0) == 0xD50B7E20) {
+   if ((INSN(31,0) & 0xFFFFF8E0) == 0xD50B7820) {
       /* Exactly the same scheme as for IC IVAU, except we observe the
          dMinLine size, and request an Ijk_FlushDCache instead of
          Ijk_InvalICache. */
