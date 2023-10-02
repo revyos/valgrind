@@ -31,7 +31,7 @@ sub getCallgrindPids {
   @pids = ();
   open LIST, $vgdb_exe . " $vgdbPrefixOption -l|";
   while(<LIST>) {
-      if (/^use --pid=(\d+) for \S*?valgrind\s+(.*?)\s*$/) {
+      if (/^use --pid=(\d+) for \S*?valgrind\.bin\s+(.*?)\s*$/) {
 	  $pid = $1;
 	  $cmd = $2;
 	  if (!($cmd =~ /--tool=callgrind/)) { next; }
