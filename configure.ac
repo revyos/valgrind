@@ -4971,6 +4971,14 @@ AM_COND_IF([VGCONF_OS_IS_SOLARIS],
            [CFLAGS_MPI="-g -O -fno-omit-frame-pointer -Wall -fpic"
             LDFLAGS_MPI="-fpic -shared"])
 
+PKG_CHECK_MODULES([MPI_C],[mpi-c],[
+	CFLAGS_MPI="$CFLAGS_MPI $MPI_C_CFLAGS"
+	LDFLAGS_MPI="$LDFLAGS_MPI $MPI_C_LIBS"
+],[
+   	CFLAGS_MPI="$CFLAGS_MPI `$MPI_CC -showme:compile`"
+	LDFLAGS_MPI="$LDFLAGS_MPI `$MPI_CC -showme:link`"
+])
+
 AC_SUBST([CFLAGS_MPI])
 AC_SUBST([LDFLAGS_MPI])
 
@@ -4978,9 +4986,7 @@ AC_SUBST([LDFLAGS_MPI])
 ## See if MPI_CC works for the primary target
 ##
 AC_MSG_CHECKING([primary target for usable MPI2-compliant C compiler and mpi.h])
-saved_CC=$CC
 saved_CFLAGS=$CFLAGS
-CC=$MPI_CC
 CFLAGS="$CFLAGS_MPI $mflag_primary"
 saved_LDFLAGS="$LDFLAGS"
 LDFLAGS="$LDFLAGS_MPI $mflag_primary"
@@ -5000,27 +5006,23 @@ AC_MSG_RESULT([yes, $MPI_CC])
 ac_have_mpi2_pri=no
 AC_MSG_RESULT([no])
 ])
-CC=$saved_CC
 CFLAGS=$saved_CFLAGS
 LDFLAGS="$saved_LDFLAGS"
 AM_CONDITIONAL(BUILD_MPIWRAP_PRI, test x$ac_have_mpi2_pri = xyes)
 
 ## See if MPI_CC works for the secondary target.  Complication: what if
 ## there is no secondary target?  We need this to then fail.
-## Kludge this by making MPI_CC something which will surely fail in
+## Kludge this by making CFLAGS something which will surely fail in
 ## such a case.
 ##
 AC_MSG_CHECKING([secondary target for usable MPI2-compliant C compiler and mpi.h])
-saved_CC=$CC
 saved_CFLAGS=$CFLAGS
 saved_LDFLAGS="$LDFLAGS"
 LDFLAGS="$LDFLAGS_MPI $mflag_secondary"
-if test x$VGCONF_PLATFORM_SEC_CAPS = x ; then
-  CC="$MPI_CC this will surely fail"
-else
-  CC=$MPI_CC
-fi
 CFLAGS="$CFLAGS_MPI $mflag_secondary"
+if test x$VGCONF_PLATFORM_SEC_CAPS = x ; then
+  CFLAGS="this will surely fail"
+fi
 AC_LINK_IFELSE([AC_LANG_PROGRAM([[
 #include <mpi.h>
 #include <stdio.h>
@@ -5037,7 +5039,6 @@ AC_MSG_RESULT([yes, $MPI_CC])
 ac_have_mpi2_sec=no
 AC_MSG_RESULT([no])
 ])
-CC=$saved_CC
 CFLAGS=$saved_CFLAGS
 LDFLAGS="$saved_LDFLAGS"
 AM_CONDITIONAL(BUILD_MPIWRAP_SEC, test x$ac_have_mpi2_sec = xyes)

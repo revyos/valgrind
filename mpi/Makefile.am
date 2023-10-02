@@ -1,16 +1,5 @@
 include $(top_srcdir)/Makefile.all.am
 
-# HACK WARNING: automake isn't good at supporting non-$(CC) compilers.
-# But we need to use $(MPI_CC) for the MPI stuff.  So we have this mpi stuff
-# in its own directory so we can use the following blunt instruments, which
-# override the C compiler and all the default flags.
-CC = $(MPI_CC)
-DEFS =
-DEFAULT_INCLUDES =
-CPPFLAGS =
-CFLAGS =
-LDFLAGS =
-
 EXTRA_DIST = \
 	mpiwrap_type_test.c
 
