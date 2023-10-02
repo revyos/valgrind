@@ -365,8 +365,7 @@ void remote_open (const HChar *name)
       VG_(umsg)("TO CONTROL THIS PROCESS USING vgdb (which you probably\n"
                 "don't want to do, unless you know exactly what you're doing,\n"
                 "or are doing some strange experiment):\n"
-                "  %s/../../bin/vgdb%s%s --pid=%d ...command...\n",
-                VG_(libdir),
+                "  /usr/bin/vgdb%s%s --pid=%d ...command...\n",
                 (VG_(arg_vgdb_prefix) ? " " : ""),
                 (VG_(arg_vgdb_prefix) ? VG_(arg_vgdb_prefix) : ""),
                 pid);
@@ -379,9 +378,8 @@ void remote_open (const HChar *name)
          "TO DEBUG THIS PROCESS USING GDB: start GDB like this\n"
          "  /path/to/gdb %s\n"
          "and then give GDB the following command\n"
-         "  target remote | %s/../../bin/vgdb%s%s --pid=%d\n",
+         "  target remote | /usr/bin/vgdb%s%s --pid=%d\n",
          VG_(args_the_exename),
-         VG_(libdir),
          (VG_(arg_vgdb_prefix) ? " " : ""),
          (VG_(arg_vgdb_prefix) ? VG_(arg_vgdb_prefix) : ""),
          pid
