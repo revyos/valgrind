@@ -234,11 +234,11 @@ AM_CCASFLAGS_X86_FREEBSD    = @FLAG_M32@ -g
 
 AM_FLAG_M3264_ARM_LINUX   = @FLAG_M32@
 AM_CFLAGS_ARM_LINUX       = @FLAG_M32@ \
-			 	$(AM_CFLAGS_BASE) -marm -mcpu=cortex-a8
+			 	$(AM_CFLAGS_BASE) -marm -mcpu=generic-armv7-a
 AM_CFLAGS_PSO_ARM_LINUX   = @FLAG_M32@ $(AM_CFLAGS_BASE) \
-				-marm -mcpu=cortex-a8 $(AM_CFLAGS_PSO_BASE)
+				-marm -mcpu=generic-armv7-a $(AM_CFLAGS_PSO_BASE)
 AM_CCASFLAGS_ARM_LINUX    = @FLAG_M32@ \
-				-marm -mcpu=cortex-a8 -g
+				-marm -mcpu=generic-armv7-a -g
 
 AM_FLAG_M3264_ARM64_LINUX = @FLAG_M64@
 AM_CFLAGS_ARM64_LINUX     = @FLAG_M64@ $(AM_CFLAGS_BASE)
