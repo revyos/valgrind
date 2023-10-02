@@ -25,6 +25,10 @@
    The GNU General Public License is contained in the file COPYING.
 */
 
+#ifdef __powerpc__
+#  pragma GCC optimize ("-O0")
+#endif
+
 #include "pub_core_basics.h"
 #include "pub_core_vki.h"
 #include "pub_core_threadstate.h"
