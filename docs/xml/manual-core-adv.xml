@@ -1351,7 +1351,7 @@ options:</para>
     <term><option>--port=&lt;portnr&gt;</option></term>
     <listitem><para>Instructs vgdb to
     use tcp/ip and listen for GDB on the specified port nr rather than
-    to use a pipe to communicate with GDB. Using tcp/ip allows to have
+    to use a pipe to communicate with GDB. Using tcp/ip allows one to have
     GDB running on one computer and debugging a Valgrind process
     running on another target computer.
     Example: 
